@@ -1,0 +1,96 @@
+port: 7890
+socks-port: 7891
+allow-lan: true
+mode: Rule
+log-level: warning
+external-controller: 127.0.0.1:9090
+unified-delay: true
+keep-alive-interval: 360
+
+clash-for-android:
+    append-system-dns: false    
+
+sniffer:
+    enable: true
+    force-dns-mapping: true
+    parse-pure-ip: true
+    override-destination: true
+    sniff: { TLS: { ports: [443, 8443] }, HTTP: { ports: [80, 8080-8880], override-destination: true } }
+    force-domain: [+.netflix.com]
+    skip-domain: ['Mijia Cloud']
+
+profile:
+    store-selected: false
+    store-fake-ip: true    
+
+dns:
+    enable: true
+    ipv6: true
+    enhanced-mode: fake-ip
+    use-hosts: true
+    listen: '127.0.0.1:5334'
+    default-nameserver: [180.184.1.1, 119.29.29.29, 223.5.5.5]
+    nameserver: [180.184.1.1, 'https://1.12.12.12/dns-query', 'https://dns.alidns.com/dns-query', 'tls://223.5.5.5:853']
+    fake-ip-range: 198.18.0.1/16
+
+proxies:
+
+proxy-groups:
+    - { name: "🥢 选择节点", type: select, proxies: ["🇭🇰 香港Auto","🇨🇳 台湾Auto","🇸🇬 新加坡Auto","🇯🇵 日本Auto","🇺🇸 美国Auto","♻️ Auto"] }
+    - { name: "♻️ Auto", type: fallback, proxies: [], url: "http://www.gstatic.com/generate_204", interval: 300 }
+    - { name: "🎥 NETFLIX", type: select, proxies: ["🥢 选择节点"]}
+    - { name: "🎥 DisneyP", type: select, proxies: ["🥢 选择节点"]}
+    - { name: "📺 BiliBili", type: select, proxies: ["DIRECT","🥢 选择节点"]} 
+    - { name: "🎮 Game", type: select, proxies: ["DIRECT","🥢 选择节点"]}
+    - { name: "🌈 Google", type: select, proxies: ["🥢 选择节点"]}     
+    - { name: "📲 电报消息", type: select, proxies: ["🥢 选择节点","DIRECT"]}
+    - { name: "🪟 微软服务", type: select, proxies: ["DIRECT","🥢 选择节点"]}    
+    - { name: "🍎 苹果服务", type: select, proxies: ["DIRECT","🥢 选择节点"]}
+    - { name: "📟 BigMEmby", type: select, proxies: ["🥢 选择节点","DIRECT"]}     
+    - { name: "🌏 国外媒体", type: select, proxies: ["🥢 选择节点" ,"DIRECT"]}
+    - { name: "🎯 国内网站", type: select, proxies: ["DIRECT","🥢 选择节点"]}
+    - { name: "🐟 漏网之鱼", type: select, proxies: ["🥢 选择节点" ,"DIRECT"]}  
+    - { name: "🇭🇰 香港Auto", type: fallback, proxies: [/香港/], url: 'http://www.gstatic.com/generate_204', interval: 300 }    
+    - { name: "🇨🇳 台湾Auto", type: fallback, proxies: [/台湾/], url: 'http://www.gstatic.com/generate_204', interval: 300 }
+    - { name: "🇸🇬 新加坡Auto", type: fallback, proxies: [/新加坡/], url: 'http://www.gstatic.com/generate_204', interval: 300 }
+    - { name: "🇯🇵 日本Auto", type: fallback, proxies: [/日本/], url: 'http://www.gstatic.com/generate_204', interval: 300 }   
+    - { name: "🇺🇸 美国Auto", type: fallback, proxies: [/美国/], url: 'http://www.gstatic.com/generate_204', interval: 300 }
+
+rule-providers:
+    Direct: { type: http, behavior: classical, url: 'https://fasdn2.oss-cn-shanghai.aliyuncs.com/Bigme_Direct.yaml', interval: 259200, path: ./ruleset/Bigme_Direct.yaml }
+    SteamCN: { type: http, behavior: classical, url: 'https://fasdn2.oss-cn-shanghai.aliyuncs.com/SteamCN.yaml', interval: 259200, path: ./ruleset/SteamCN.yaml }
+    Proxy: { type: http, behavior: classical, url: 'https://fasdn2.oss-cn-shanghai.aliyuncs.com/Bigme_Proxy.yaml', interval: 259200, path: ./ruleset/Bigme_Proxy.yaml }
+    OpenAI: { type: http, behavior: classical, url: 'https://fasdn2.oss-cn-shanghai.aliyuncs.com/OpenAI.yaml', interval: 259200, path: ./ruleset/OpenAI.yaml }    
+    Netflix: { type: http, behavior: classical, url: 'https://fasdn2.oss-cn-shanghai.aliyuncs.com/Netflix_Classical.yaml', interval: 259200, path: ./ruleset/Netflix.yaml }
+    Disney: { type: http, behavior: classical, url: 'https://fasdn2.oss-cn-shanghai.aliyuncs.com/Disney.yaml', interval: 259200, path: ./ruleset/Disney.yaml }
+    BiliBili: { type: http, behavior: classical, url: 'https://fasdn2.oss-cn-shanghai.aliyuncs.com/BiliBili.yaml', interval: 259200, path: ./ruleset/BiliBili.yaml }
+    Game: { type: http, behavior: classical, url: 'https://fasdn2.oss-cn-shanghai.aliyuncs.com/Game.yaml', interval: 259200, path: ./ruleset/Game.yaml }
+    Google: { type: http, behavior: classical, url: 'https://fasdn2.oss-cn-shanghai.aliyuncs.com/Google_No_Resolve.yaml', interval: 259200, path: ./ruleset/Google.yaml }
+    YouTube: { type: http, behavior: classical, url: 'https://fasdn2.oss-cn-shanghai.aliyuncs.com/YouTube.yaml', interval: 259200, path: ./ruleset/YouTube.yaml }     
+    Telegram: { type: http, behavior: classical, url: 'https://fasdn2.oss-cn-shanghai.aliyuncs.com/Telegram.yaml', interval: 259200, path: ./ruleset/Telegram.yaml }
+    Microsoft: { type: http, behavior: classical, url: 'https://fasdn2.oss-cn-shanghai.aliyuncs.com/Microsoft.yaml', interval: 259200, path: ./ruleset/Microsoft.yaml }
+    Apple: { type: http, behavior: classical, url: 'https://fasdn2.oss-cn-shanghai.aliyuncs.com/Apple_Classical.yaml', interval: 259200, path: ./ruleset/Apple.yaml }
+    BigMEmby: { type: http, behavior: classical, url: 'https://fasdn2.oss-cn-shanghai.aliyuncs.com/BigMEmby.yaml', interval: 259200, path: ./ruleset/BigMEmby.yaml }
+    GlobalMedia: { type: http, behavior: classical, url: 'https://fasdn2.oss-cn-shanghai.aliyuncs.com/GlobalMedia_Classical_No_Resolve.yaml', interval: 259200, path: ./ruleset/GlobalMedia.yaml }
+
+rules:
+    # 自定义规则
+    ##必须直连的
+    - RULE-SET,Direct,🎯 国内网站,no-resolve
+    - RULE-SET,SteamCN,🎯 国内网站          
+    ##必须代理的
+    - RULE-SET,Proxy,🥢 选择节点
+    - RULE-SET,OpenAI,🥢 选择节点    
+    - RULE-SET,Netflix,🎥 NETFLIX
+    - RULE-SET,Disney,🎥 DisneyP
+    - RULE-SET,BiliBili,📺 BiliBili  
+    - RULE-SET,Game,🎮 Game
+    - RULE-SET,Google,🌈 Google,no-resolve         
+    - RULE-SET,YouTube,🌈 Google      
+    - RULE-SET,Telegram,📲 电报消息
+    - RULE-SET,Microsoft,🪟 微软服务           
+    - RULE-SET,Apple,🍎 苹果服务
+    - RULE-SET,BigMEmby,📟 BigMEmby
+    - RULE-SET,GlobalMedia,🌏 国外媒体,no-resolve    
+    - GEOIP,CN,🎯 国内网站
+    - MATCH,🐟 漏网之鱼
