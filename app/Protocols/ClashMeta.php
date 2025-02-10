@@ -9,7 +9,7 @@ use Symfony\Component\Yaml\Yaml;
 
 class ClashMeta implements ProtocolInterface
 {
-    public $flags = ['meta', 'verge', 'flclash'];
+    public $flags = ['meta', 'verge', 'flclash', 'mihomo'];
     private $servers;
     private $user;
 
@@ -31,7 +31,7 @@ class ClashMeta implements ProtocolInterface
         $appName = admin_setting('app_name', 'XBoard');
         $defaultConfig = base_path() . '/resources/rules/default.clash.yaml';
         $customClashConfig = base_path() . '/resources/rules/custom.clash.yaml';
-        $customConfig = base_path() . '/resources/rules/custom.clashmeta.yaml';
+        $customConfig = base_path() . '/resources/rules/custom.mihomo.yaml';
         if (\File::exists($customConfig)) {
             $config = Yaml::parseFile($customConfig);
         } elseif (\File::exists($customClashConfig)) {
@@ -108,23 +108,6 @@ class ClashMeta implements ProtocolInterface
     /**
      * Build the rules for Clash.
      */
-    public function buildRules($config)
-    {
-        // Force the current subscription domain to be a direct rule
-        $subsDomain = request()->header('Host');
-        if ($subsDomain) {
-            array_unshift($config['rules'], "DOMAIN,{$subsDomain},DIRECT");
-        }
-        // Force the nodes ip to be a direct rule
-        collect($this->servers)->pluck('host')->map(function ($host) {
-            $host = trim($host);
-            return filter_var($host, FILTER_VALIDATE_IP) ? [$host] : Helper::getIpByDomainName($host);
-        })->flatten()->unique()->each(function ($nodeIP) use (&$config) {
-            array_unshift($config['rules'], "IP-CIDR,{$nodeIP}/32,DIRECT,no-resolve");
-        });
-
-        return $config;
-    }
 
     public static function buildShadowsocks($password, $server)
     {

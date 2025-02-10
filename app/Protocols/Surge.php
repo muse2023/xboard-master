@@ -68,8 +68,8 @@ class Surge implements ProtocolInterface
         }
 
         // Subscription link
+        $subsURL = Helper::getSubscribeUrl($user['token']);
         $subsDomain = request()->header('Host');
-        $subsURL = Helper::getSubscribeUrl($user['token'], $subsDomain ? 'https://' . $subsDomain : null);
 
         $config = str_replace('$subs_link', $subsURL, $config);
         $config = str_replace('$subs_domain', $subsDomain, $config);
