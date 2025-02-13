@@ -319,7 +319,7 @@ Route::get('/user', function (Request $request) {
         $renderParams = [
             'title' => admin_setting('app_name', 'Xboard'),
             'theme' => $theme,
-            'theme_path' => '/theme/' . config('v2board.frontend_theme', 'v2board') . '/assets/',
+            'theme_path' => '/theme/netsp/assets',
             'version' => app(UpdateService::class)->getCurrentVersion(),
             'description' => admin_setting('app_description', 'Xboard is best'),
             'logo' => admin_setting('logo'),

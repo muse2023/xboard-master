@@ -30,6 +30,7 @@ dns:
     use-hosts: true
     listen: '127.0.0.1:5334'
     default-nameserver: [180.184.1.1, 119.29.29.29, 223.5.5.5]
+    proxy-server-nameserver: [180.184.1.1, 119.29.29.29, 223.5.5.5]
     nameserver: [180.184.1.1, 'https://1.12.12.12/dns-query', 'https://dns.alidns.com/dns-query', 'tls://223.5.5.5:853']
     fake-ip-range: 198.18.0.1/16
 
