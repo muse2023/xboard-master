@@ -320,6 +320,7 @@ Route::get('/user', function (Request $request) {
             'title' => admin_setting('app_name', 'Xboard'),
             'theme' => $theme,
             'theme_path' => '/theme/netsp/assets/',
+            'theme_path' => '/theme/' . admin_setting('frontend_theme', 'v2board') . '/assets/', 
             'version' => app(UpdateService::class)->getCurrentVersion(),
             'description' => admin_setting('app_description', 'Xboard is best'),
             'logo' => admin_setting('logo'),
