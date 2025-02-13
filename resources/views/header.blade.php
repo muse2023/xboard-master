@@ -13,7 +13,6 @@
   <script src="/assets/js/Notice.js"></script>
   <script
     type="text/javascript">window.$crisp = []; window.CRISP_WEBSITE_ID = "9d0c3637-d6cf-442e-952e-b1eeaed90dc1"; (function () { d = document; s = d.createElement("script"); s.src = "https://client.crisp.chat/l.js"; s.async = 1; d.getElementsByTagName("head")[0].appendChild(s); })();</script>
-    <script type="text/javascript" src="https://ai.haruka.cloud/intro.js"></script>
 </head>
 
 <body>
