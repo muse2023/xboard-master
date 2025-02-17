@@ -35,7 +35,7 @@ class ClashMeta implements ProtocolInterface
         if (empty($template)) {
             $defaultConfig = base_path('resources/rules/default.clash.yaml');
             $customClashConfig = base_path('resources/rules/custom.clash.yaml');
-            $customConfig = base_path('resources/rules/custom.mihomo.yaml');
+            $customConfig = base_path('resources/rules/custom.clashmeta.yaml');
             if (file_exists($customConfig)) {
                 $template = file_get_contents($customConfig);
             } elseif (file_exists($customClashConfig)) {
